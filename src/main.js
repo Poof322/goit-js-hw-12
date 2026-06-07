@@ -75,7 +75,8 @@ async function onSubmit(event) {
 async function onLoadMore() {
   page += 1;
 
-  showLoader();
+  hideLoadMoreButton();
+showLoader();
 
   try {
     const data = await getImagesByQuery(query, page);
@@ -84,14 +85,16 @@ async function onLoadMore() {
 
     const loadedImages = page * PER_PAGE;
 
-    if (loadedImages >= totalHits) {
-      hideLoadMoreButton();
+  if (loadedImages >= totalHits) {
+  hideLoadMoreButton();
 
-      iziToast.info({
-        message:
-          "We're sorry, but you've reached the end of search results.",
-      });
-    }
+  iziToast.info({
+    message:
+      "We're sorry, but you've reached the end of search results.",
+  });
+} else {
+  showLoadMoreButton();
+}
 
     const card = document
       .querySelector('.gallery-item')
